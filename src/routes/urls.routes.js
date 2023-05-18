@@ -3,7 +3,7 @@ import validateToken from "../middlewares/validateToken.js";
 import validateBody from "../middlewares/validateBody.js";
 import urlsSchema from "../schemas/urls.schema.js";
 import {
-  PostController,
+  postController,
   openController,
 } from "../controllers/urls.controllers.js";
 import validateShortUrl from "../middlewares/validateShortUrl.js";
@@ -16,7 +16,7 @@ urlsRouter.post(
   "/urls/shorten",
   validateToken,
   validateBody(urlsSchema),
-  PostController
+  postController
 );
 
 export default urlsRouter;
