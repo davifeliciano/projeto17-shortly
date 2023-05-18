@@ -1,6 +1,18 @@
 import UrlsRepository from "../repositories/urls.repository.js";
 import { createShortUrl } from "../services/urls.services.js";
 
+export async function findByIdController(req, res) {
+  const { id } = res.locals;
+
+  try {
+    const urlsAndId = await UrlsRepository.findById(id);
+    return urlsAndId !== null ? res.send(urlsAndId) : res.sendStatus(404);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
+}
+
 export async function postController(req, res) {
   const { id: userId } = res.locals.user;
   const { url } = res.locals.body;

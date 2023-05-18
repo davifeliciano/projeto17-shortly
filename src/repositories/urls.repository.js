@@ -2,6 +2,23 @@ import pool from "../database/pool.js";
 import camelCaseRows from "./utils/camelCaseRows.js";
 
 class UrlsRepository {
+  static async findById(id) {
+    const query = `
+      SELECT
+        id,
+        short_url,
+        url
+      FROM urls
+      WHERE id = $1;
+    `;
+
+    const { rows } = await pool.query(query, [id]);
+
+    if (rows.length === 0) return null;
+
+    return camelCaseRows(rows)[0];
+  }
+
   static async insert(userId, url, shortUrl) {
     const query = `
       INSERT INTO urls
