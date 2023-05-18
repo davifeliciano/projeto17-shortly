@@ -29,7 +29,7 @@ CREATE TABLE public.urls (
     user_id integer,
     url text NOT NULL,
     short_url character varying(32) NOT NULL,
-    visit_count integer NOT NULL,
+    visit_count integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     CONSTRAINT urls_visit_count_check CHECK ((visit_count >= 0))
 );
