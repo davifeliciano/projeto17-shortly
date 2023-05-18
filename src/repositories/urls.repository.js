@@ -17,6 +17,23 @@ class UrlsRepository {
 
     return camelCaseRows(rows)[0];
   }
+
+  static async visitUrl(shortUrl) {
+    const query = `
+      UPDATE urls
+      SET
+        visit_count = visit_count + 1
+      WHERE
+        short_url = $1
+      RETURNING url;
+    `;
+
+    const { rows } = await pool.query(query, [shortUrl]);
+
+    if (rows.length === 0) return null;
+
+    return rows[0].url;
+  }
 }
 
 export default UrlsRepository;
