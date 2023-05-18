@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateBody } from "../middlewares/validateBody.js";
+import validateBody from "../middlewares/validateBody.js";
 import { signInSchema, singUpSchema } from "../schemas/auth.schema.js";
 import {
   signInController,
