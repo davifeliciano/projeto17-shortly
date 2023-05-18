@@ -1,8 +1,6 @@
 import { nanoid } from "nanoid";
 import UrlsRepository from "../repositories/urls.repository.js";
-
-const minUrlSize = 8;
-const maxUrlSize = 12;
+import { MAX_URL_SIZE, MIN_URL_SIZE } from "../constants/urls.constants.js";
 
 export async function createShortUrl(
   userId,
@@ -11,7 +9,7 @@ export async function createShortUrl(
 ) {
   const shortUrlSize = shortUrl.length;
 
-  if (shortUrlSize < minUrlSize || shortUrlSize > maxUrlSize) {
+  if (shortUrlSize < MIN_URL_SIZE || shortUrlSize > MAX_URL_SIZE) {
     throw new Error("Could not generate a unique short_url");
   }
 
