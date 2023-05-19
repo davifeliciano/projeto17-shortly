@@ -34,7 +34,7 @@ export async function deleteController(req, res) {
 
     if (deletedCount !== 0) return res.sendStatus(204);
 
-    const urlsAndId = UrlsRepository.findById(id);
+    const urlsAndId = await UrlsRepository.findById(id);
     return urlsAndId !== null ? res.sendStatus(401) : res.sendStatus(404);
   } catch (err) {
     console.error(err);
