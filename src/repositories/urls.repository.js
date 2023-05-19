@@ -35,6 +35,17 @@ class UrlsRepository {
     return camelCaseRows(rows)[0];
   }
 
+  static async delete(id, userId) {
+    const query = `
+      DELETE FROM urls
+      WHERE id = $1 AND user_id = $2;
+    `;
+
+    const { rowCount } = await pool.query(query, [id, userId]);
+
+    return rowCount;
+  }
+
   static async visitUrl(shortUrl) {
     const query = `
       UPDATE urls

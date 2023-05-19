@@ -14,12 +14,28 @@ export async function findByIdController(req, res) {
 }
 
 export async function postController(req, res) {
-  const { id: userId } = res.locals.user;
+  const { user } = res.locals;
   const { url } = res.locals.body;
 
   try {
-    const shortUrlAndId = await createShortUrl(userId, url);
+    const shortUrlAndId = await createShortUrl(user.id, url);
     return res.status(201).send(shortUrlAndId);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
+}
+
+export async function deleteController(req, res) {
+  const { id, user } = res.locals;
+
+  try {
+    const deletedCount = await UrlsRepository.delete(id, user.id);
+
+    if (deletedCount !== 0) return res.sendStatus(204);
+
+    const urlsAndId = UrlsRepository.findById(id);
+    return urlsAndId !== null ? res.sendStatus(401) : res.sendStatus(404);
   } catch (err) {
     console.error(err);
     return res.status(500).send(err);

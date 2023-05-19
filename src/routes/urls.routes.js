@@ -8,12 +8,14 @@ import {
   postController,
   openController,
   findByIdController,
+  deleteController,
 } from "../controllers/urls.controllers.js";
 
 const urlsRouter = Router();
 
 urlsRouter.get("/urls/:id", validateId, findByIdController);
 urlsRouter.get("/urls/open/:shortUrl", validateShortUrl, openController);
+urlsRouter.delete("/urls/:id", validateToken, validateId, deleteController);
 
 urlsRouter.post(
   "/urls/shorten",
