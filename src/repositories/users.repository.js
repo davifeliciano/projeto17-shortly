@@ -29,6 +29,39 @@ class UsersRepository {
 
     return rowCount;
   }
+
+  static async getStats(id) {
+    const query = `
+      SELECT
+        id,
+        name,
+        (
+          SELECT sum(visit_count)
+          FROM urls
+          WHERE user_id = $1
+        ) AS "visitCount",
+        (
+          SELECT json_agg(t)
+          FROM (
+            SELECT
+              id,
+              short_url AS "shortUrl",
+              url,
+              visit_count AS "visitCount"
+            FROM urls
+            WHERE user_id = $1
+          ) AS t
+        ) AS "shortenedUrls"
+      FROM users
+      WHERE id = $1;
+    `;
+
+    const { rows } = await pool.query(query, [id]);
+
+    if (rows.length === 0) return null;
+
+    return rows[0];
+  }
 }
 
 export default UsersRepository;
