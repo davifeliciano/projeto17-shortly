@@ -5,7 +5,7 @@ import { MAX_URL_SIZE, MIN_URL_SIZE } from "../constants/urls.constants.js";
 export async function createShortUrl(
   userId,
   url,
-  shortUrl = nanoid(minUrlSize)
+  shortUrl = nanoid(MIN_URL_SIZE)
 ) {
   const shortUrlSize = shortUrl.length;
 
