@@ -62,6 +62,25 @@ class UsersRepository {
 
     return rows[0];
   }
+
+  static async getRanking(limit = 10) {
+    const query = `
+      SELECT
+        users.id,
+        users.name,
+        count(urls.short_url) AS "linksCount",
+        sum(coalesce(urls.visit_count, 0)) AS "visitCount"
+      FROM users
+      LEFT JOIN urls ON users.id = urls.user_id
+      GROUP BY users.id
+      ORDER BY "visitCount" DESC
+      LIMIT $1;
+    `;
+
+    const { rows } = await pool.query(query, [limit]);
+
+    return rows;
+  }
 }
 
 export default UsersRepository;

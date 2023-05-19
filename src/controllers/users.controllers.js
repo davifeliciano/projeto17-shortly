@@ -11,3 +11,13 @@ export async function getStatsController(req, res) {
     return res.status(500).send(err);
   }
 }
+
+export async function getRankingController(req, res) {
+  try {
+    const ranking = await UsersRepository.getRanking();
+    return res.send(ranking);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
+}
