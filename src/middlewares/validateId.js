@@ -7,7 +7,7 @@ export default function validateId(req, res, next) {
   const { error, value } = idSchema.validate(id);
 
   if (error) {
-    return res.status(404);
+    return res.sendStatus(404);
   }
 
   res.locals.id = value;
