@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UsersRepository from "../repositories/users.repository.js";
+import { SECRET_KEY } from "../constants/auth.constants.js";
 
 export async function signInUser(email, password) {
   const user = await UsersRepository.findByEmail(email);
@@ -16,7 +17,7 @@ export async function signInUser(email, password) {
       email: user.email,
       createdAt: user.createdAt,
     },
-    process.env.SECRET_KEY,
+    SECRET_KEY,
     { expiresIn: "1d" }
   );
 
